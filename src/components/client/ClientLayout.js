@@ -11,9 +11,10 @@ import {
   List,
   ListItemIcon,
   ListItemText,
+  Grid,
+  Avatar,
 } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
+import { Inbox, DoubleArrowOutlined } from '@material-ui/icons';
 import authService from '../../services/auth-service';
 
 const useStyles = makeStyles((theme) => ({
@@ -23,38 +24,48 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
+  main: {
+    background: '#FFF',
+    padding: '25px',
+    minHeight: '500px',
+  },
+  sideMenu: {
+    background: '#FFF',
+  },
 }));
 
 const menuItens = [
   {
     id: 1,
     text: 'Perfil',
-    icon: () => (<InboxIcon />),
+    icon: () => (<Inbox />),
   },
   {
     id: 2,
     text: 'Dashboard',
-    icon: () => (<InboxIcon />),
+    icon: () => (<Inbox />),
   },
   {
     id: 3,
     text: 'Alterar senha',
-    icon: () => (<InboxIcon />),
+    icon: () => (<Inbox />),
   },
 ];
 
 export default function ClientLayout({ children }) {
-  const [doctorName, setDoctorName] = useState('...');
+  const [doctor, setDoctor] = useState({
+    name: '',
+    picture: '',
+  });
   const classes = useStyles();
 
   useEffect(() => {
     authService()
       .getUser()
       .then((user) => {
-        const { name } = user;
-        setDoctorName(name);
+        setDoctor(user);
       });
-  });
+  }, []);
 
   return (
     <>
@@ -63,28 +74,34 @@ export default function ClientLayout({ children }) {
           <Container>
             <Toolbar variant="dense">
               <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                <MenuIcon />
+                <Avatar src={doctor.picture} />
               </IconButton>
               <Typography variant="h6" color="inherit">
                 Dr
                 {' '}
-                {doctorName}
+                {doctor.name}
               </Typography>
             </Toolbar>
           </Container>
         </AppBar>
         <Container style={{ paddingTop: '105px' }}>
-          <List>
-            {menuItens.map((item) => (
-              <ListItem button key={item.id}>
-                <ListItemIcon>
-                  {item.icon()}
-                </ListItemIcon>
-                <ListItemText primary={item.text} />
-              </ListItem>
-            ))}
-          </List>
-          {children}
+          <Grid container spacing={10}>
+            <Grid item xs={3}>
+              <List className={classes.sideMenu}>
+                {menuItens.map((item) => (
+                  <ListItem button key={item.id}>
+                    <ListItemIcon>
+                      {item.icon()}
+                    </ListItemIcon>
+                    <ListItemText primary={item.text} />
+                  </ListItem>
+                ))}
+              </List>
+            </Grid>
+            <Grid item xs={8} className={classes.main}>
+              {children}
+            </Grid>
+          </Grid>
         </Container>
       </div>
     </>

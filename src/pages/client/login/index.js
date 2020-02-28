@@ -75,7 +75,7 @@ function Login({ history }) {
           })
           .then(() => {
             showAlertMessage('success', 'Cadastro realizado com sucesso!');
-            setTab(1);
+            changeTab(1);
           })
           .catch((err) => handleError(err));
       });
@@ -136,7 +136,7 @@ function Login({ history }) {
           </Alert>
         );
       }
-      return (<span />);
+      return null;
     },
     full() {
       if (window.innerWidth > 1000 && alertMessage.show) {
@@ -154,14 +154,14 @@ function Login({ history }) {
           </Alert>
         );
       }
-      return (<span />);
+      return null;
     },
   });
 
   return (
     <Flex>
       <BackgroundBanner className="bg-left">
-        { viewAlert().min() }
+        { viewAlert().full() }
       </BackgroundBanner>
       <BackgroundBanner>
         <Header />
@@ -172,7 +172,7 @@ function Login({ history }) {
           </Tab>
           {renderForm()}
         </BoxForm>
-        { viewAlert().full() }
+        { viewAlert().min() }
       </BackgroundBanner>
     </Flex>
   );

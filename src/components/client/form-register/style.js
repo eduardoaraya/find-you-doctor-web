@@ -18,13 +18,12 @@ export const Form = styled.form`
    
     .btn-next{
         position:relative;
-        float:right;
-        bottom:0;
-        right:0;
+        left:0;
         bottom:0;
         flex-direction:row;
+        justify-content:flex-start;
         button{
-            margin:35px;
+            margin:25px 0px;
             max-width:150px;
         }
     }

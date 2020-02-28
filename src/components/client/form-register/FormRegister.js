@@ -10,7 +10,6 @@ import Step2 from './step2';
 import Step3 from './step3';
 
 export default function FormRegister({ sizeOfBox, handleFormSubmit, validateStep1 }) {
-  const [step, setStep] = useState(1);
   const [formData, setFormData] = useState(formDataProvider);
   const alert = useAlert();
 

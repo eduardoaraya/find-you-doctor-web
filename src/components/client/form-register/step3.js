@@ -42,7 +42,7 @@ export default function Step3({
           <Link className="link" to="privacy" target="_blank"> Politica de privacidade</Link>
         </p>
       </div>
-      <div style={{ maxWidth: '250px', marginLeft: '40px' }}>
+      <div style={{ maxWidth: '500px', marginLeft: '5px' }}>
 
         { (formData.terms.required && formData.terms.validate === false)
             && <small>{formData.terms.message}</small> }
